@@ -38,12 +38,12 @@ def main():
     _ = dt.fit(x_train, y_train)
 
     # make predictions on training data
-    prd = dt.predict(x_train)
-    print("Accuracy on training data", accuracy_score(y_train, prd))
+    y_prd = dt.predict(x_train)
+    print("Accuracy on training data", accuracy_score(y_train, y_prd))
 
     # make predictions on test data
-    prd = dt.predict(x_test)
-    print("Accuracy on test data", accuracy_score(y_test, prd))
+    y_prd = dt.predict(x_test)
+    print("Accuracy on test data", accuracy_score(y_test, y_prd))
 
     dt.plot_tree("../output/decision_tree_plot")
 
