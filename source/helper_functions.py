@@ -68,4 +68,9 @@ def add_digraph_node(nid, node, graph, class_names):
     neg_cl_num = node[neg_cl_name]
     pos_cl_num = node[pos_cl_name]
     label += f"{neg_cl_name} = {neg_cl_num},  {pos_cl_name} = {pos_cl_num}"
-    graph.node(str(nid), label)
+    # interpolate between red and green color RGB codes to color the more
+    # "positive" nodes more redish, and the more "negative" nodes greenish.
+    pos_cl_ratio = pos_cl_num / (pos_cl_num + neg_cl_num)
+    node_color_rgb = (int(255*pos_cl_ratio), int(255*(1 - pos_cl_ratio)), 0)
+    rgb2hex = lambda c: "#{:02x}{:02x}{:02x}".format(*c)
+    graph.node(str(nid), label, style='filled', fillcolor=str(rgb2hex(node_color_rgb)))
