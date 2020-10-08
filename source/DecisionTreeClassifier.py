@@ -15,7 +15,10 @@ class DecisionTreeClassifier:
         self.attributes = attributes
         self.class_names = class_names
 
-    def fit(self, data, target, node={}, depth=0):
+    def fit(self, data, target):
+        self.__fit(data, target, node={}, depth=0)
+
+    def __fit(self, data, target, node, depth):
         if node is None or len(target) == 0:
             return None
         pos_cl_name = self.class_names[1]
@@ -54,8 +57,8 @@ class DecisionTreeClassifier:
                     pos_cl_name: n_ones}
             t_left = target[data[:, col] < spl_val]
             t_right = target[data[:, col] >= spl_val]
-            node['left'] = self.fit(data[data[:, col] < spl_val], t_left, {}, depth + 1)
-            node['right'] = self.fit(data[data[:, col] >= spl_val], t_right, {}, depth + 1)
+            node['left'] = self.__fit(data[data[:, col] < spl_val], t_left, {}, depth + 1)
+            node['right'] = self.__fit(data[data[:, col] >= spl_val], t_right, {}, depth + 1)
             self.depth += 1
             self.root = node
             return node
@@ -74,6 +77,7 @@ class DecisionTreeClassifier:
         return col, spl_val, max_gain
 
     def __find_best_split_for_attr(self, col, target):
+        # TODO: Handle categorcial attribute case.
         max_gain = 0
         spl_val = None
         new_arr = np.array([col, target])
