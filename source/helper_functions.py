@@ -48,8 +48,8 @@ def make_digraph(node, graph, class_names, nid=0):
         nid2 = make_digraph(node['right'], graph, class_names, nid1)
         add_digraph_node(nid2, node, graph, class_names)
         curr_id, left_id, right_id = nid2, nid1 - 1, nid2 - 1
-        graph.edge(f'{curr_id}', f'{left_id}')
-        graph.edge(f'{curr_id}', f'{right_id}')
+        graph.edge(f'{curr_id}', f'{left_id}', label='true')
+        graph.edge(f'{curr_id}', f'{right_id}', label='false')
         res = nid2 + 1
     return res
 
